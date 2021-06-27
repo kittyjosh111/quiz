@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:html_unescape/html_unescape.dart';
 import 'package:quiz/model/question.dart';
@@ -100,6 +102,18 @@ class _QuestionWidgetState extends State<QuestionWidget> {
         ),
       );
 
+  Widget questionImageContainer(String base64Image) => Expanded(
+        child: Container(
+          //padding: const EdgeInsets.all(16),
+          alignment: Alignment.center,
+          child: SingleChildScrollView(
+            child: Image(
+                image:
+                    Image.memory(Base64Decoder().convert(base64Image)).image),
+          ),
+        ),
+      );
+
   Widget optionWidget(int index, String option, {bool isCorrect = false}) =>
       Container(
         margin: const EdgeInsets.symmetric(horizontal: 32),
@@ -179,14 +193,25 @@ class _QuestionWidgetState extends State<QuestionWidget> {
           : optionWidget(i, option);
     });
 
-    return Container(
-      child: Column(
-        children: [
-              questionContainer(
-                  HtmlUnescape().convert(widget._question.question))
-            ] +
-            optionWidgets,
-      ),
-    );
+    return widget._question.questionImage != ''
+        ? Container(
+            child: Column(
+              children: [
+                    questionContainer(
+                        HtmlUnescape().convert(widget._question.question))
+                  ] +
+                  [questionImageContainer(widget._question.questionImage)] +
+                  optionWidgets,
+            ),
+          )
+        : Container(
+            child: Column(
+              children: [
+                    questionContainer(
+                        HtmlUnescape().convert(widget._question.question))
+                  ] +
+                  optionWidgets,
+            ),
+          );
   }
 }

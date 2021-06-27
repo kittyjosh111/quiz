@@ -116,10 +116,10 @@ class CustomizeQuizPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              difficultyButton(0, "Easy"),
-              difficultyButton(1, "Medium"),
-              difficultyButton(2, "Hard"),
-              difficultyButton(3, "Mixed"),
+              difficultyButton(1, "Easy"),
+              difficultyButton(2, "Medium"),
+              difficultyButton(3, "Hard"),
+              difficultyButton(0, "Mixed"),
             ],
           ),
         ),
@@ -232,7 +232,7 @@ class CustomizeQuizPage extends StatelessWidget {
                     children: [
                       countCounter(),
                       questionDifficultyContainer(),
-                      questionTypeContainer(),
+                      //questionTypeContainer(),
                     ],
                   ),
                   Align(

@@ -9,16 +9,23 @@ class QuestionRepository {
 
   Future<List<Question>> getQuestions(QuizParameter quizParameter) async {
     final List<Question> questions = [];
+    print("url=" + quizParameter.toString());
     final http.Response response =
         await _client.get(Uri.parse(quizParameter.toString()));
     final String body = response.body;
+    //print("body=" + body);
     final json = jsonDecode(body);
 
-    if (json['response_code'] == 0) {
-      final results = json['results'];
+    if (json.length > 0) {
+      final results = json;
 
       for (int i = 0; i < results.length; ++i) {
-        questions.add(Question.fromJson(results[i]));
+        Question q = Question.fromJson(results[i]);
+        //if (q.questionImage != '')
+        //  print("has image");
+        //else
+        //  print("no image");
+        questions.add(q);
       }
     }
 

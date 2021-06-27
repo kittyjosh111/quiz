@@ -51,7 +51,7 @@ class _ClockState extends State<Clock> {
 
   @override
   Widget build(BuildContext context) {
-    if (rotation == 200.0) {
+    if (rotation == 600.0) {
       timer.cancel();
       WidgetsFlutterBinding.ensureInitialized()
           .addPostFrameCallback((timeStamp) {
