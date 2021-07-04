@@ -5,7 +5,7 @@ import 'package:quiz/model/question_parameter.dart';
 import 'package:quiz/model/result.dart';
 import 'package:quiz/service/question_service_provider.dart';
 import 'package:quiz/view/score_page.dart';
-import 'package:quiz/widget/clock.dart';
+//import 'package:quiz/widget/clock.dart';
 import 'package:quiz/widget/question_widget.dart';
 
 class QuizPage extends StatelessWidget {
@@ -75,10 +75,12 @@ class QuizPage extends StatelessWidget {
                   .popUntil((route) => route.settings.name == '/');
             },
           ),
+          /*
           Clock(
             onTimerEnd:
                 Provider.of<QuestionServiceProvider>(context).nextQuestion,
           ),
+          */
           MaterialButton(
             color: Colors.grey,
             child: Row(
