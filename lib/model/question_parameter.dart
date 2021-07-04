@@ -53,7 +53,7 @@ class QuizParameter {
   @override
   String toString() {
     return API +
-        "/search?_limit=$_amount" +
+        "/search?" +
         "${_category == null ? "" : "&category_id=" + _category.toString()}" +
         "${_difficulty == null ? "" : "&difficulty=" + difficulty}" +
         "${_type == null ? "" : "&type=" + type}";

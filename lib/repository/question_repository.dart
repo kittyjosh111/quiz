@@ -28,7 +28,21 @@ class QuestionRepository {
         questions.add(q);
       }
     }
+    questions.shuffle();
 
-    return questions;
+    int amount = quizParameter.amount;
+    final List<Question> randomized = [];
+
+    if (amount > questions.length) {
+      amount = questions.length;
+    }
+
+    for (int i=0; i<amount; i++) {
+      Question r = questions[i];
+      randomized.add(r);
+    }
+
+    return randomized;
   }
+ 
 }
