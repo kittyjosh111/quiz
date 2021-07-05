@@ -24,7 +24,7 @@ class QuizCustomizerCubit extends Cubit<AbstractQuizCustomizerState> {
   int _questionCount = 10;
   int _difficultyIndex = 0;
   int _questionTypeIndex = 2;
-  QuestionCategory _category = QuestionCategory.ANY;
+  QuestionCategoryExtension _category = QuestionCategoryExtension.ANY;
   QuestionDifficulty _difficulty = QuestionDifficulty.ANY;
   QuestionType _type = QuestionType.ANY;
 
@@ -38,14 +38,15 @@ class QuizCustomizerCubit extends Cubit<AbstractQuizCustomizerState> {
 
   int get questionTypeIndex => _questionTypeIndex;
 
-  QuestionCategory get category => _category;
+  QuestionCategoryExtension get category => _category;
 
   QuestionDifficulty get difficulty => _difficulty;
 
   QuestionType get type => _type;
 
   void selectCategory(int category,
-      {QuestionCategory questionCategory = QuestionCategory.ANY}) {
+      {QuestionCategoryExtension questionCategory =
+          QuestionCategoryExtension.ANY}) {
     _quizCategory = category;
     _category = questionCategory;
     emit(QuizCategoryChosenState());

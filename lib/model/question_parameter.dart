@@ -19,7 +19,7 @@ class QuizParameter {
 
   factory QuizParameter.fromEnums({
     @required int amount,
-    QuestionCategory category,
+    QuestionCategoryExtension category,
     QuestionDifficulty difficulty,
     QuestionType type,
   }) {

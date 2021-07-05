@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'dart:math';
 import 'package:http/http.dart' as http;
 import 'package:quiz/model/question.dart';
 import 'package:quiz/model/question_parameter.dart';
@@ -15,7 +15,7 @@ class QuestionRepository {
     final apiUrlJson = jsonDecode(apiUrlBody);
     final apiUrl = apiUrlJson['url'];
 
-    final List<Question> questions = [];
+    List<Question> questions = [];
     // get url parameters
     final String url = apiUrl + quizParameter.toString();
     print("url=" + url);
@@ -35,7 +35,13 @@ class QuestionRepository {
         //  print("no image");
         questions.add(q);
       }
+
+      questions.shuffle();
+      questions =
+          questions.take(min(quizParameter.amount, questions.length)).toList();
     }
+
+    /*
     questions.shuffle();
 
     int amount = quizParameter.amount;
@@ -51,5 +57,7 @@ class QuestionRepository {
     }
 
     return randomized;
+    */
+    return questions;
   }
 }

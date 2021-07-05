@@ -4,13 +4,10 @@ import 'package:quiz/model/quiz_category.dart';
 
 class QuizService {
   /// Returns a list of category names in title case
-  List<String> get categories => QuestionCategory.values.map((category) {
-        // Take the string after the '.'
-        String string = category.toString().toLowerCase().split(".")[1];
-
-        // Convert the string to title case
-        return string.substring(0, 1).toUpperCase() + string.substring(1);
-      }).toList();
+  List<String> get categories => QuestionCategory()
+      .getCategoriesImmediate()
+      .map((category) => category.title)
+      .toList();
 
   QuizParameter getQuizParameter({
     @required int categoryIndex,

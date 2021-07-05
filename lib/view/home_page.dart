@@ -20,6 +20,7 @@ class _HomePageState extends State<HomePage>
   final ScrollController _scrollController = ScrollController();
   AnimationController _animationController;
   bool _show = true;
+  bool _loading = true;
 
   /// Listen to scroll direction
   /// And hide and show fab animation direction
@@ -55,12 +56,24 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
+    if (_loading) {
+      QuestionCategory category = QuestionCategory();
+      category.getCategories().then((value) => setState(() {
+            _loading = false;
+          }));
+      return Material(
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
+    QuestionCategory category = QuestionCategory();
+    //category.getCategories().then((value) => _loading = false);
     final Size size = MediaQuery.of(context).size;
     QuizCustomizerCubit quizCustomizer =
         BlocProvider.of<QuizCustomizerCubit>(context);
-    List<QuestionCategory> categories = QuestionCategory.values
-        .where((category) => category != QuestionCategory.ANY)
-        .toList();
+    List<QuestionCategoryExtension> categories =
+        category.getCategoriesImmediate();
 
     /// Returns the MaxCrossAxisExtend value according to the orientation
     double getMaxCrossAxisExtend() {
