@@ -170,8 +170,8 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                   Flexible(
                       flex: 10,
                       fit: FlexFit.loose,
-                      child: FittedBox(
-                        fit: BoxFit.fitWidth,
+                      child: Container(
+                        //fit: BoxFit.fitWidth,
                         child: Text(
                           option,
                           style: TextStyle(
