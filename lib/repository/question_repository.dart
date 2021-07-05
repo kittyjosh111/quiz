@@ -8,10 +8,18 @@ class QuestionRepository {
   final http.Client _client = http.Client();
 
   Future<List<Question>> getQuestions(QuizParameter quizParameter) async {
+    // get question api url first
+    final http.Response apiUrlResponse = await _client.get(Uri.parse(
+        'https://raw.githubusercontent.com/kittyjosh111/biology_app_config/master/questions_api_url.json'));
+    final String apiUrlBody = apiUrlResponse.body;
+    final apiUrlJson = jsonDecode(apiUrlBody);
+    final apiUrl = apiUrlJson['url'];
+
     final List<Question> questions = [];
-    print("url=" + quizParameter.toString());
-    final http.Response response =
-        await _client.get(Uri.parse(quizParameter.toString()));
+    // get url parameters
+    final String url = apiUrl + quizParameter.toString();
+    print("url=" + url);
+    final http.Response response = await _client.get(Uri.parse(url));
     final String body = response.body;
     //print("body=" + body);
     final json = jsonDecode(body);
@@ -37,12 +45,11 @@ class QuestionRepository {
       amount = questions.length;
     }
 
-    for (int i=0; i<amount; i++) {
+    for (int i = 0; i < amount; i++) {
       Question r = questions[i];
       randomized.add(r);
     }
 
     return randomized;
   }
- 
 }

@@ -4,8 +4,6 @@ import 'package:quiz/model/question_type.dart';
 import 'package:quiz/model/quiz_category.dart';
 
 class QuizParameter {
-  static const API =
-      "https://sheet.best/api/sheets/ab2383be-38bc-44e3-9ef4-7a6e46b602fb";
   final int _amount;
   final int _category;
   final String _difficulty;
@@ -52,8 +50,7 @@ class QuizParameter {
 
   @override
   String toString() {
-    return API +
-        "/search?" +
+    return "/search?" +
         "${_category == null ? "" : "&category_id=" + _category.toString()}" +
         "${_difficulty == null ? "" : "&difficulty=" + difficulty}" +
         "${_type == null ? "" : "&type=" + type}";
