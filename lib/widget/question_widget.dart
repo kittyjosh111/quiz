@@ -77,7 +77,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
     }
   }
 
-  Widget questionContainer(String question) => Expanded(
+  Widget questionContainer(String question) => Container(
         child: Container(
           padding: const EdgeInsets.only(bottom: 24),
           alignment: Alignment.center,
@@ -87,13 +87,13 @@ class _QuestionWidgetState extends State<QuestionWidget> {
               margin: EdgeInsets.symmetric(
                   horizontal: MediaQuery.of(context).size.width * 0.05),
               alignment: Alignment.center,
-              child: SingleChildScrollView(
+              child: Container(
                 child: Text(
                   question,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 32,
+                    fontSize: 18,
                   ),
                 ),
               ),
@@ -102,14 +102,22 @@ class _QuestionWidgetState extends State<QuestionWidget> {
         ),
       );
 
-  Widget questionImageContainer(String base64Image) => Expanded(
+  Widget questionImageContainer(String base64Image) => Container(
         child: Container(
-          //padding: const EdgeInsets.all(16),
           alignment: Alignment.center,
-          child: SingleChildScrollView(
-            child: Image(
-                image:
-                    Image.memory(Base64Decoder().convert(base64Image)).image),
+          child: Material(
+            color: Colors.transparent,
+            child: Container(
+              margin: EdgeInsets.symmetric(
+                  horizontal: MediaQuery.of(context).size.width * 0.05),
+              padding: EdgeInsets.only(bottom: 16),
+              alignment: Alignment.center,
+              child: Container(
+                child: Image(
+                    image: Image.memory(Base64Decoder().convert(base64Image))
+                        .image),
+              ),
+            ),
           ),
         ),
       );
@@ -117,7 +125,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
   Widget optionWidget(int index, String option, {bool isCorrect = false}) =>
       Container(
         margin: const EdgeInsets.symmetric(horizontal: 32),
-        padding: EdgeInsets.only(bottom: index == options.length - 1 ? 0 : 16),
+        padding: EdgeInsets.only(bottom: index == options.length - 1 ? 8 : 16),
         child: Material(
           elevation: 10,
           color: color,
@@ -160,19 +168,18 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Flexible(
-                    flex: 10,
-                    fit: FlexFit.loose,
-                    child: FittedBox(
-                      fit: BoxFit.fitWidth,
-                      child: Text(
-                        option,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
+                      flex: 10,
+                      fit: FlexFit.loose,
+                      child: FittedBox(
+                        fit: BoxFit.fitWidth,
+                        child: Text(
+                          option,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
+                      )),
                   Flexible(
                     flex: 1,
                     child: resultIcons[index],
@@ -194,7 +201,8 @@ class _QuestionWidgetState extends State<QuestionWidget> {
     });
 
     return widget._question.questionImage != ''
-        ? Container(
+        ? SingleChildScrollView(
+            child: Container(
             child: Column(
               children: [
                     questionContainer(
@@ -203,8 +211,9 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                   [questionImageContainer(widget._question.questionImage)] +
                   optionWidgets,
             ),
-          )
-        : Container(
+          ))
+        : SingleChildScrollView(
+            child: Container(
             child: Column(
               children: [
                     questionContainer(
@@ -212,6 +221,6 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                   ] +
                   optionWidgets,
             ),
-          );
+          ));
   }
 }
