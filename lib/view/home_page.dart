@@ -106,7 +106,7 @@ class _HomePageState extends State<HomePage>
                   children: [
                     TextSpan(
                         text: "Choose a",
-                        style: Theme.of(context).textTheme.headline4),
+                        style: Theme.of(context).textTheme.headline2),
                     TextSpan(
                       text: "\nCategory",
                       style: Theme.of(context).textTheme.headline3,

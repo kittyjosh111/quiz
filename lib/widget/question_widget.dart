@@ -1,8 +1,8 @@
 import 'dart:convert';
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:html_unescape/html_unescape.dart';
 import 'package:quiz/model/question.dart';
+import 'package:pinch_zoom_image_updated/pinch_zoom_image_updated.dart';
 
 class QuestionWidget extends StatefulWidget {
   final Question _question;
@@ -113,9 +113,20 @@ class _QuestionWidgetState extends State<QuestionWidget> {
               padding: EdgeInsets.only(bottom: 16),
               alignment: Alignment.center,
               child: Container(
-                child: Image(
-                    image: Image.memory(Base64Decoder().convert(base64Image))
-                        .image),
+                child: PinchZoomImage(
+                  image: Image.memory(Base64Decoder().convert(base64Image)),
+                  zoomedBackgroundColor: Color.fromRGBO(240, 240, 240, 1.0),
+                  hideStatusBarWhileZooming: true,
+                  onZoomStart: () {
+                    print('Zoom started');
+                  },
+                  onZoomEnd: () {
+                    print('Zoom finished');
+                  },
+                ),
+                //child: Image(
+                //    image: Image.memory(Base64Decoder().convert(base64Image))
+                //        .image),
               ),
             ),
           ),
