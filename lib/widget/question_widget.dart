@@ -115,7 +115,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                   style: TextStyle(
                     color: Theme.of(context)
                         .textTheme
-                        .button
+                        .bodyText1
                         .color, //color: Colors.white,
                     fontSize: 18,
                   ),
@@ -164,7 +164,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
         padding: EdgeInsets.only(bottom: index == options.length - 1 ? 8 : 16),
         child: Material(
           elevation: 10,
-          color: color,
+          color: Theme.of(context).primaryColor,
           shape: BeveledRectangleBorder(
             borderRadius: BorderRadius.circular(8.0),
             side: BorderSide(
