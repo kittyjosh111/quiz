@@ -14,7 +14,9 @@ dependencies:
   material_segmented_control: ^3.1.2
   flutter_bloc: ^7.0.0
   provider: ^5.0.0
-  pinch_zoom_image_updated: ^0.2.6
+  pinch_zoom_image_last: ^0.4.1
+  dynamic_themes: ^1.1.0
+  shared_preferences: ^2.0.6
 
 dev_dependencies:
   flutter_test:

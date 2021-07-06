@@ -1,9 +1,11 @@
+import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz/model/quiz_category.dart';
 import 'package:quiz/service/quiz_customizer_cubit.dart';
+import 'package:quiz/theme/ThemeItem.dart';
 import 'package:quiz/view/customize_quiz_page.dart';
 import 'package:quiz/widget/category_tile.dart';
 import 'package:quiz/widget/feeling_lucky_button.dart';
@@ -20,7 +22,8 @@ class _HomePageState extends State<HomePage>
   final ScrollController _scrollController = ScrollController();
   AnimationController _animationController;
   bool _show = true;
-  bool _loading = true;
+  bool _loading = false;
+  bool _loaded = false;
 
   /// Listen to scroll direction
   /// And hide and show fab animation direction
@@ -39,9 +42,34 @@ class _HomePageState extends State<HomePage>
     }
   }
 
+  ThemeItem _selectedItem;
+
+  List<DropdownMenuItem<ThemeItem>> _dropDownMenuItems;
+
+  List<DropdownMenuItem<ThemeItem>> buildDropdownMenuItems() {
+    List<DropdownMenuItem<ThemeItem>> items = List();
+    for (ThemeItem themeItem in ThemeItem.getThemeItems()) {
+      items
+          .add(DropdownMenuItem(value: themeItem, child: Text(themeItem.name)));
+    }
+    return items;
+  }
+
+  void changeColor() {
+    DynamicTheme.of(context).setTheme(this._selectedItem.id);
+  }
+
+  onChangeDropdownItem(ThemeItem selectedItem) {
+    setState(() {
+      this._selectedItem = selectedItem;
+    });
+    changeColor();
+  }
+
   @override
   void initState() {
     super.initState();
+    _dropDownMenuItems = buildDropdownMenuItems();
     _animationController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 500));
     _scrollController.addListener(_scrollListener);
@@ -56,11 +84,19 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    if (_loading) {
+    if (!_loading) {
+      _loading = true;
       QuestionCategory category = QuestionCategory();
-      category.getCategories().then((value) => setState(() {
-            _loading = false;
-          }));
+      category
+          .getCategories()
+          .then((value) => setState(() {
+                _loaded = true;
+              }))
+          .onError((error, stackTrace) => setState(() {
+                _loaded = true;
+              }));
+    }
+    if (!_loaded) {
       return Material(
         child: Center(
           child: CircularProgressIndicator(),
@@ -143,6 +179,20 @@ class _HomePageState extends State<HomePage>
       builder: (context, state) {
         return Material(
           child: Scaffold(
+            appBar: AppBar(
+              title: Text("Quiz"),
+              actions: <Widget>[
+                DropdownButton(
+                  icon: Icon(Icons.palette, color: Colors.white),
+                  items: _dropDownMenuItems,
+                  onChanged: onChangeDropdownItem,
+                  underline: SizedBox(),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+              ],
+            ),
             floatingActionButton: FeelingLuckyButton(
               onPressed: feelingLuckyButtonOnPressed,
               animationController: _animationController,
