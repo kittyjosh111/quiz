@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiz/model/config.dart';
 
 class FeelingLuckyButton extends StatefulWidget {
   final VoidCallback _floatingActionButtonOnPressed;
@@ -20,7 +21,7 @@ class _FeelingLuckyButtonState extends State<FeelingLuckyButton> {
   @override
   Widget build(BuildContext context) {
     final floatingActionButtonLabelText = Text(
-      "I'm Feeling Lucky",
+      Config().luckyText,
       style: TextStyle(
         color: Theme.of(context).primaryColor, //blue,
       ),

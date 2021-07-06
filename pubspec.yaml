@@ -17,36 +17,18 @@ dependencies:
   pinch_zoom_image_last: ^0.4.1
   dynamic_themes: ^1.1.0
   shared_preferences: ^2.0.6
+  flutter_launcher_icons: ^0.9.0
 
-dev_dependencies:
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/icon/msjhs_logo.png"
+
+  dev_dependencies:
   flutter_test:
     sdk: flutter
 
 flutter:
   uses-material-design: true
   assets:
-    - assets/images/animals.webp
-    - assets/images/anime.webp
-    - assets/images/art.webp
-    - assets/images/bgames.webp
-    - assets/images/books.webp
-    - assets/images/cartoon.webp
-    - assets/images/celebrities.webp
-    - assets/images/comics.webp
-    - assets/images/computers.webp
-    - assets/images/film.webp
-    - assets/images/gadgets.webp
-    - assets/images/games.webp
-    - assets/images/geography.webp
-    - assets/images/history.webp
-    - assets/images/knowledge.webp
-    - assets/images/mathematics.webp
-    - assets/images/music.webp
-    - assets/images/mythology.webp
-    - assets/images/plants.webp    
-    - assets/images/politics.webp
-    - assets/images/science.webp
-    - assets/images/sports.webp
-    - assets/images/television.webp
-    - assets/images/theatres.webp
-    - assets/images/vehicles.webp
+    - assets/icon/msjhs_logo.png

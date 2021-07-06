@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_segmented_control/material_segmented_control.dart';
 import 'package:quiz/animation/bouncing_animation.dart';
+import 'package:quiz/model/config.dart';
 import 'package:quiz/service/quiz_customizer_cubit.dart';
 import 'package:quiz/view/quiz_page.dart';
 import 'package:quiz/widget/start_quiz_button.dart';
@@ -222,6 +223,9 @@ class CustomizeQuizPage extends StatelessWidget {
       builder: (context, state) {
         return Material(
           child: Scaffold(
+            appBar: AppBar(
+              title: Text(Config().customizeTitleText),
+            ),
             body: SafeArea(
               child: Stack(
                 fit: StackFit.expand,

@@ -15,26 +15,21 @@ class Config {
   final http.Client _client = http.Client();
   bool _loaded = false;
 
-  Brightness brightness;
-  Color primaryColor;
-  Color accentColor;
-  Color backgroundColor;
-  Color scaffoldBackgroundColor;
-  Color textColor;
-  Color quitButtonColor;
-  Color nextButtonColor;
   double categoryFontSize;
-  Color luckyTextColor;
-  Color luckyBackgroundColor;
-  Color optionColor;
-  Color optionCorrectColor;
-  Color optionWrongColor;
+  Color categoryFontColor;
   double questionFontSize;
   double optionFontSize;
+  String homeTitleText;
+  String customizeTitleText;
+  String luckyText;
+  String homeParagraph1;
+  double homeParagraph1FontSize;
+  String homeParagraph2;
+  double homeParagraph2FontSize;
 
-  Future<void> loadConfig() async {
+  Future<bool> loadConfig() async {
     if (_loaded) {
-      return;
+      return true;
     } else {
       // get question api url first
       final http.Response apiUrlResponse = await _client.get(Uri.parse(
@@ -50,51 +45,34 @@ class Config {
       //print("body=" + body);
       final json = jsonDecode(body);
       if (json.length > 0) {
-        brightness = json[0]['brightness'] == 'dark'
-            ? Brightness.dark
-            : Brightness.light;
-        primaryColor = Color(int.parse(json[0]['primaryColor'], radix: 16));
-        accentColor = Color(int.parse(json[0]['accentColor'], radix: 16));
-
-        backgroundColor =
-            Color(int.parse(json[0]['backgroundColor'], radix: 16));
-        scaffoldBackgroundColor =
-            Color(int.parse(json[0]['scaffoldBackgroundColor'], radix: 16));
-        textColor = Color(int.parse(json[0]['textColor'], radix: 16));
-        quitButtonColor =
-            Color(int.parse(json[0]['quitButtonColor'], radix: 16));
-        nextButtonColor =
-            Color(int.parse(json[0]['nextButtonColor'], radix: 16));
         categoryFontSize = double.parse(json[0]['categoryFontSize']);
-        luckyTextColor = Color(int.parse(json[0]['luckyTextColor'], radix: 16));
-        luckyBackgroundColor =
-            Color(int.parse(json[0]['luckyBackgroundColor'], radix: 16));
-        optionColor = Color(int.parse(json[0]['optionColor'], radix: 16));
-        optionCorrectColor =
-            Color(int.parse(json[0]['optionCorrectColor'], radix: 16));
-        optionWrongColor =
-            Color(int.parse(json[0]['optionWrongColor'], radix: 16));
+        categoryFontColor =
+            Color(int.parse(json[0]['categoryFontColor'], radix: 16));
         questionFontSize = double.parse(json[0]['questionFontSize']);
         optionFontSize = double.parse(json[0]['optionFontSize']);
+        homeTitleText = json[0]['homeTitleText'];
+        customizeTitleText = json[0]['customizeTitleText'];
+        luckyText = json[0]['luckyText'];
+        homeParagraph1 = json[0]['homeParagraph1'];
+        homeParagraph1FontSize =
+            double.parse(json[0]['homeParagraph1FontSize']);
+        homeParagraph2 = json[0]['homeParagraph2'];
+        homeParagraph2FontSize =
+            double.parse(json[0]['homeParagraph2FontSize']);
       }
-      assert(brightness != null &&
-          primaryColor != null &&
-          accentColor != null &&
-          backgroundColor != null &&
-          scaffoldBackgroundColor != null &&
-          textColor != null &&
-          quitButtonColor != null &&
-          nextButtonColor != null &&
-          categoryFontSize != null &&
-          luckyTextColor != null &&
-          luckyBackgroundColor != null &&
-          optionColor != null &&
-          optionCorrectColor != null &&
-          optionWrongColor != null &&
+      assert(categoryFontSize != null &&
+          categoryFontColor != null &&
           questionFontSize != null &&
-          optionFontSize != null);
+          optionFontSize != null &&
+          homeTitleText != null &&
+          customizeTitleText != null &&
+          luckyText != null &&
+          homeParagraph1 != null &&
+          homeParagraph1FontSize != null &&
+          homeParagraph2 != null &&
+          homeParagraph2FontSize != null);
       _loaded = true;
-      return;
+      return true;
     }
   }
 }

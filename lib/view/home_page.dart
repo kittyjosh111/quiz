@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quiz/model/config.dart';
 import 'package:quiz/model/quiz_category.dart';
 import 'package:quiz/service/quiz_customizer_cubit.dart';
 import 'package:quiz/theme/ThemeItem.dart';
@@ -24,6 +25,8 @@ class _HomePageState extends State<HomePage>
   bool _show = true;
   bool _loading = false;
   bool _loaded = false;
+  bool _loadingConfig = false;
+  bool _loadedConfig = false;
 
   /// Listen to scroll direction
   /// And hide and show fab animation direction
@@ -84,19 +87,35 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    if (!_loading) {
-      _loading = true;
-      QuestionCategory category = QuestionCategory();
-      category
-          .getCategories()
-          .then((value) => setState(() {
-                _loaded = true;
-              }))
-          .onError((error, stackTrace) => setState(() {
-                _loaded = true;
-              }));
-    }
-    if (!_loaded) {
+    if (!_loaded || !_loadedConfig) {
+      if (!_loading) {
+        _loading = true;
+        QuestionCategory category = QuestionCategory();
+        category
+            .getCategories()
+            .then((value) => setState(() {
+                  _loaded = true;
+                }))
+            .onError((error, stackTrace) => () {
+                  setState(() {
+                    _loaded = true;
+                  });
+                });
+      }
+      if (!_loadingConfig) {
+        _loadingConfig = true;
+        Config config = Config();
+        config
+            .loadConfig()
+            .then((value) => setState(() {
+                  _loadedConfig = true;
+                }))
+            .onError((error, stackTrace) => () {
+                  setState(() {
+                    _loadedConfig = true;
+                  });
+                });
+      }
       return Material(
         child: Center(
           child: CircularProgressIndicator(),
@@ -154,11 +173,13 @@ class _HomePageState extends State<HomePage>
                 text: TextSpan(
                   children: [
                     TextSpan(
-                        text: "Choose a",
-                        style: Theme.of(context).textTheme.headline2),
+                        text: Config().homeParagraph1,
+                        style: TextStyle(
+                            fontSize: Config().homeParagraph1FontSize)),
                     TextSpan(
-                      text: "\nCategory",
-                      style: Theme.of(context).textTheme.headline3,
+                      text: "\n" + Config().homeParagraph2,
+                      style:
+                          TextStyle(fontSize: Config().homeParagraph2FontSize),
                     ),
                   ],
                 ),
@@ -180,7 +201,7 @@ class _HomePageState extends State<HomePage>
         return Material(
           child: Scaffold(
             appBar: AppBar(
-              title: Text("Quiz"),
+              title: Text(Config().homeTitleText),
               actions: <Widget>[
                 DropdownButton(
                   icon: Icon(Icons.palette, color: Colors.white),
