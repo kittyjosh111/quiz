@@ -7,40 +7,52 @@ final ThemeData lightPurpleAmber = ThemeData(
     primarySwatch: Colors.amber,
     iconTheme: IconThemeData(color: Colors.amber),
     textTheme: TextTheme(
-        title: TextStyle(
-            fontSize: 20, fontWeight: FontWeight.w600, color: Colors.black),
-        subtitle: TextStyle(
-            fontSize: 15, fontWeight: FontWeight.w300, color: Colors.black54)));
+      title: TextStyle(
+          fontSize: 20, fontWeight: FontWeight.w600, color: Colors.black),
+      subtitle: TextStyle(
+          fontSize: 15, fontWeight: FontWeight.w300, color: Colors.black54),
+      button: TextStyle(
+          fontSize: 18, fontWeight: FontWeight.w300, color: Colors.white),
+    ));
 final ThemeData lightIndigoPink = ThemeData(
     brightness: Brightness.light,
     primaryColor: Colors.indigo,
     primarySwatch: Colors.pink,
     iconTheme: IconThemeData(color: Colors.pink),
     textTheme: TextTheme(
-        title: TextStyle(
-            fontSize: 20, fontWeight: FontWeight.w600, color: Colors.black),
-        subtitle: TextStyle(
-            fontSize: 15, fontWeight: FontWeight.w300, color: Colors.black54)));
+      title: TextStyle(
+          fontSize: 20, fontWeight: FontWeight.w600, color: Colors.black),
+      subtitle: TextStyle(
+          fontSize: 15, fontWeight: FontWeight.w300, color: Colors.black54),
+      button: TextStyle(
+          fontSize: 18, fontWeight: FontWeight.w300, color: Colors.white),
+    ));
 final ThemeData darkPinkBlueGrey = ThemeData(
     brightness: Brightness.dark,
     primarySwatch: Colors.blueGrey,
     primaryColor: Colors.pink,
     iconTheme: IconThemeData(color: Colors.blueGrey),
     textTheme: TextTheme(
-        title: TextStyle(
-            fontSize: 20, fontWeight: FontWeight.w600, color: Colors.white),
-        subtitle: TextStyle(
-            fontSize: 15, fontWeight: FontWeight.w300, color: Colors.white70)));
+      title: TextStyle(
+          fontSize: 20, fontWeight: FontWeight.w600, color: Colors.white),
+      subtitle: TextStyle(
+          fontSize: 15, fontWeight: FontWeight.w300, color: Colors.white70),
+      button: TextStyle(
+          fontSize: 18, fontWeight: FontWeight.w300, color: Colors.white),
+    ));
 final ThemeData darkPurpleGreen = ThemeData(
     brightness: Brightness.dark,
     primaryColor: Colors.purple,
     primarySwatch: Colors.green,
     iconTheme: IconThemeData(color: Colors.green),
     textTheme: TextTheme(
-        title: TextStyle(
-            fontSize: 20, fontWeight: FontWeight.w600, color: Colors.white),
-        subtitle: TextStyle(
-            fontSize: 15, fontWeight: FontWeight.w300, color: Colors.white70)));
+      title: TextStyle(
+          fontSize: 20, fontWeight: FontWeight.w600, color: Colors.white),
+      subtitle: TextStyle(
+          fontSize: 15, fontWeight: FontWeight.w300, color: Colors.white70),
+      button: TextStyle(
+          fontSize: 18, fontWeight: FontWeight.w300, color: Colors.white),
+    ));
 
 class AppThemes {
   static const int LightPurpleAmber = 0;
@@ -58,7 +70,7 @@ class ThemeItem {
 
   static List<ThemeItem> getThemeItems() {
     return <ThemeItem>[
-      ThemeItem(AppThemes.LightPurpleAmber, 'Dark Purple & Amber(Light)',
+      ThemeItem(AppThemes.LightPurpleAmber, 'Purple & Amber(Light)',
           'light-purple-amber', lightPurpleAmber),
       ThemeItem(AppThemes.LightIndigoPink, 'Indigo & Pink(Light)',
           'light-indigo-pink', lightIndigoPink),

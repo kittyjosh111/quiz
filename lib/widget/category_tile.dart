@@ -58,7 +58,7 @@ class CategoryTile extends StatelessWidget {
                       child: Text(
                         "${_questionCategory.title.toUpperCase()}",
                         style: TextStyle(
-                          color: Colors.white,
+                          //color: Colors.white,
                           fontSize: 24,
                         ),
                       ),

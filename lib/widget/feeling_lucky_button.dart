@@ -22,7 +22,7 @@ class _FeelingLuckyButtonState extends State<FeelingLuckyButton> {
     final floatingActionButtonLabelText = Text(
       "I'm Feeling Lucky",
       style: TextStyle(
-        color: Colors.blue,
+        color: Theme.of(context).primaryColor, //blue,
       ),
     );
 

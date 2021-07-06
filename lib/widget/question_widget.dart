@@ -57,6 +57,27 @@ class _QuestionWidgetState extends State<QuestionWidget> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    options = widget._question.options;
+    optionWidgets = [];
+    colors = [];
+    resultIcons = [];
+    correctAnswerIndex = 0;
+    answered = false;
+
+    for (int i = 0; i < options.length; ++i) {
+      colors.add(Theme.of(context).primaryColor);
+      resultIcons.add(Container());
+
+      if (options[i] == widget._question.correctAnswer) {
+        correctAnswerIndex = i;
+      }
+    }
+  }
+
+  @override
   void didUpdateWidget(QuestionWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
 
@@ -68,7 +89,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
     answered = false;
 
     for (int i = 0; i < options.length; ++i) {
-      colors.add(color);
+      colors.add(Theme.of(context).primaryColor);
       resultIcons.add(Container());
 
       if (options[i] == widget._question.correctAnswer) {
@@ -77,7 +98,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
     }
   }
 
-  Widget questionContainer(String question) => Container(
+  Widget questionContainer(String question, BuildContext context) => Container(
         child: Container(
           padding: const EdgeInsets.only(bottom: 24),
           alignment: Alignment.center,
@@ -92,7 +113,10 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                   question,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Theme.of(context)
+                        .textTheme
+                        .button
+                        .color, //color: Colors.white,
                     fontSize: 18,
                   ),
                 ),
@@ -133,7 +157,8 @@ class _QuestionWidgetState extends State<QuestionWidget> {
         ),
       );
 
-  Widget optionWidget(int index, String option, {bool isCorrect = false}) =>
+  Widget optionWidget(
+          int index, String option, bool isCorrect, BuildContext context) =>
       Container(
         margin: const EdgeInsets.symmetric(horizontal: 32),
         padding: EdgeInsets.only(bottom: index == options.length - 1 ? 8 : 16),
@@ -186,7 +211,10 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                         child: Text(
                           option,
                           style: TextStyle(
-                            color: Colors.white,
+                            color: Theme.of(context)
+                                .textTheme
+                                .button
+                                .color, //color: Colors.white,
                             fontSize: 18,
                           ),
                         ),
@@ -207,8 +235,8 @@ class _QuestionWidgetState extends State<QuestionWidget> {
     optionWidgets = List.generate(options.length, (i) {
       String option = HtmlUnescape().convert(options[i]);
       return option == widget._question.correctAnswer
-          ? optionWidget(i, option, isCorrect: true)
-          : optionWidget(i, option);
+          ? optionWidget(i, option, true, context)
+          : optionWidget(i, option, false, context);
     });
 
     return widget._question.questionImage != ''
@@ -217,7 +245,8 @@ class _QuestionWidgetState extends State<QuestionWidget> {
             child: Column(
               children: [
                     questionContainer(
-                        HtmlUnescape().convert(widget._question.question))
+                        HtmlUnescape().convert(widget._question.question),
+                        context)
                   ] +
                   [questionImageContainer(widget._question.questionImage)] +
                   optionWidgets,
@@ -228,7 +257,8 @@ class _QuestionWidgetState extends State<QuestionWidget> {
             child: Column(
               children: [
                     questionContainer(
-                        HtmlUnescape().convert(widget._question.question))
+                        HtmlUnescape().convert(widget._question.question),
+                        context)
                   ] +
                   optionWidgets,
             ),

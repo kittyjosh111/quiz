@@ -131,7 +131,7 @@ class CustomizeQuizPage extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         child: Text(
           "$value",
-          style: TextStyle(color: Colors.white),
+          //style: TextStyle(color: Colors.white),
         ),
       );
     }

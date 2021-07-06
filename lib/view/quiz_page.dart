@@ -11,10 +11,10 @@ import 'package:quiz/widget/question_widget.dart';
 class QuizPage extends StatelessWidget {
   static const routeName = "/quizPage";
 
-  Widget questionCounter({
-    @required int totalCount,
-    @required int currentIndex,
-  }) {
+  Widget questionCounter(
+      {@required int totalCount,
+      @required int currentIndex,
+      BuildContext context}) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Column(
@@ -23,7 +23,7 @@ class QuizPage extends StatelessWidget {
           Text(
             "Question ${currentIndex + 1}/$totalCount",
             style: TextStyle(
-              color: Colors.white,
+              //color: Colors.white,
               fontSize: 24,
             ),
           ),
@@ -35,8 +35,9 @@ class QuizPage extends StatelessWidget {
               children: List<Widget>.generate(
                 totalCount,
                 (index) {
-                  Color color =
-                      index == currentIndex ? Colors.amber : Colors.grey;
+                  Color color = index == currentIndex
+                      ? Theme.of(context).accentColor
+                      : Theme.of(context).primaryColor;
 
                   return Expanded(
                     child: Container(
@@ -62,12 +63,14 @@ class QuizPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           MaterialButton(
-            color: Colors.redAccent,
+            color: Theme.of(context).accentColor,
             child: Row(
               children: [
                 Icon(Icons.power_settings_new),
                 SizedBox(width: 8),
-                Text("Quit"),
+                Text("Quit",
+                    style: TextStyle(
+                        color: Theme.of(context).textTheme.button.color)),
               ],
             ),
             onPressed: () {
@@ -82,10 +85,12 @@ class QuizPage extends StatelessWidget {
           ),
           */
           MaterialButton(
-            color: Colors.grey,
+            color: Theme.of(context).primaryColor,
             child: Row(
               children: [
-                Text("Next"),
+                Text("Next",
+                    style: TextStyle(
+                        color: Theme.of(context).textTheme.button.color)),
                 SizedBox(width: 8),
                 Icon(Icons.navigate_next),
               ],
@@ -147,13 +152,14 @@ class QuizPage extends StatelessWidget {
           return Scaffold(
             body: SafeArea(
               child: Material(
-                color: Colors.deepPurple,
+                color: Theme.of(context)
+                    .scaffoldBackgroundColor, //Colors.deepPurple,
                 child: Column(
                   children: [
                     questionCounter(
-                      currentIndex: index,
-                      totalCount: count,
-                    ),
+                        currentIndex: index,
+                        totalCount: count,
+                        context: context),
                     Expanded(
                       child: questionWidget,
                     ),
