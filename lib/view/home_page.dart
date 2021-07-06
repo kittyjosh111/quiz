@@ -175,11 +175,14 @@ class _HomePageState extends State<HomePage>
                     TextSpan(
                         text: Config().homeParagraph1,
                         style: TextStyle(
-                            fontSize: Config().homeParagraph1FontSize)),
+                            fontSize: Config().homeParagraph1FontSize,
+                            color:
+                                Theme.of(context).textTheme.headline2.color)),
                     TextSpan(
                       text: "\n" + Config().homeParagraph2,
-                      style:
-                          TextStyle(fontSize: Config().homeParagraph2FontSize),
+                      style: TextStyle(
+                          fontSize: Config().homeParagraph2FontSize,
+                          color: Theme.of(context).textTheme.headline2.color),
                     ),
                   ],
                 ),
