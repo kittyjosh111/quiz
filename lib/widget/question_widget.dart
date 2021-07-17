@@ -142,10 +142,10 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                   zoomedBackgroundColor: Color.fromRGBO(240, 240, 240, 1.0),
                   hideStatusBarWhileZooming: true,
                   onZoomStart: () {
-                    print('Zoom started');
+                    //print('Zoom started');
                   },
                   onZoomEnd: () {
-                    print('Zoom finished');
+                    //print('Zoom finished');
                   },
                 ),
                 //child: Image(

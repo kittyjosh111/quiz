@@ -79,8 +79,8 @@ class QuizCustomizerCubit extends Cubit<AbstractQuizCustomizerState> {
       questionTypeIndex: questionTypeIndex,
     );
 
-    print('Quiz Parameter: ${_quizParameter.toJson()}');
-    print('URL: ${_quizParameter.toString()}');
+    //print('Quiz Parameter: ${_quizParameter.toJson()}');
+    //print('URL: ${_quizParameter.toString()}');
 
     emit(StartQuizState());
   }

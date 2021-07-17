@@ -48,7 +48,7 @@ class QuestionServiceProvider extends ChangeNotifier {
   }
 
   void answer(bool value) {
-    print(value);
+    //print(value);
     if (value) {
       ++_score;
     }
@@ -65,5 +65,9 @@ class QuestionServiceProvider extends ChangeNotifier {
 
   void refreshCompleted(bool value) {
     _completed = value;
+  }
+
+  bool noQuestions() {
+    return (_questions == null || _index == _questions.length);
   }
 }

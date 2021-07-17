@@ -239,7 +239,7 @@ class _HomePageState extends State<HomePage>
                         (BuildContext context, int index) => CategoryTile(
                           questionCategory: categories[index],
                           onTap: () {
-                            print("selected category index $index");
+                            //print("selected category index $index");
                             quizCustomizer.selectCategory(index + 1);
                           },
                         ),

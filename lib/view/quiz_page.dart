@@ -142,6 +142,12 @@ class QuizPage extends StatelessWidget {
               child: CircularProgressIndicator(),
             ),
           );
+        } else if (Provider.of<QuestionServiceProvider>(context).noQuestions()) {
+          return Material(
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
         } else {
           Question question = questionService.question;
           QuestionWidget questionWidget = QuestionWidget(

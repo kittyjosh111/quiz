@@ -42,7 +42,6 @@ class MyApp extends StatelessWidget {
                   if (routeName == HomePage.routeName) {
                     return MaterialPageRoute(builder: (_) => HomePage());
                   } else if (routeName == CustomizeQuizPage.routeName) {
-                    print('here');
                     return PageRouteBuilder(
                         pageBuilder: (_, __, ___) => CustomizeQuizPage(),
                         transitionsBuilder: (_, animation, __, child) {

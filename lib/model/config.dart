@@ -39,7 +39,7 @@ class Config {
       final apiUrl = apiUrlJson['config_url'];
 
       // get url parameters
-      print("url=" + apiUrl);
+      //print("url=" + apiUrl);
       final http.Response response = await _client.get(Uri.parse(apiUrl));
       final String body = response.body;
       //print("body=" + body);

@@ -18,7 +18,7 @@ class QuestionRepository {
     List<Question> questions = [];
     // get url parameters
     final String url = apiUrl + quizParameter.toString();
-    print("url=" + url);
+    //print("url=" + url);
     final http.Response response = await _client.get(Uri.parse(url));
     final String body = response.body;
     //print("body=" + body);
