@@ -22,7 +22,9 @@ dependencies:
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/icon/msjhs_logo.png"
+  image_path: "assets/ios/icon.png"
+  adaptive_icon_background: "#ffffff"
+  adaptive_icon_foreground: "assets/ios/icon.png"
 
 dev_dependencies:
   flutter_test:
@@ -30,5 +32,4 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  assets:
-    - assets/icon/msjhs_logo.png
+  
