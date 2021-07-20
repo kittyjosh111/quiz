@@ -53,8 +53,8 @@ class CustomizeQuizPage extends StatelessWidget {
               trackColor: Theme.of(context).primaryColor,
             )),
             initialValue: quizCustomizer.questionCount.toDouble(),
-            min: 1,
-            max: 50,
+            min: Config().minCount,
+            max: Config().maxCount,
             onChange: changeQuestionCount,
             innerWidget: (value) {
               return Container(

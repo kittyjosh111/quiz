@@ -26,6 +26,8 @@ class Config {
   double homeParagraph1FontSize;
   String homeParagraph2;
   double homeParagraph2FontSize;
+  double minCount;
+  double maxCount;
 
   Future<bool> loadConfig() async {
     if (_loaded) {
@@ -59,6 +61,8 @@ class Config {
         homeParagraph2 = json[0]['homeParagraph2'];
         homeParagraph2FontSize =
             double.parse(json[0]['homeParagraph2FontSize']);
+        minCount = double.parse(json[0]['minCount']);
+        maxCount = double.parse(json[0]['maxCount']);
       }
       assert(categoryFontSize != null &&
           categoryFontColor != null &&
@@ -70,7 +74,9 @@ class Config {
           homeParagraph1 != null &&
           homeParagraph1FontSize != null &&
           homeParagraph2 != null &&
-          homeParagraph2FontSize != null);
+          homeParagraph2FontSize != null &&
+          minCount != null &&
+          maxCount != null);
       _loaded = true;
       return true;
     }
