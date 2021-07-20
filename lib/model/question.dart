@@ -36,11 +36,18 @@ class Question {
         correctAnswer: json["correct_answer"],
         incorrectAnswers: json["incorrect_answer_2"] != ''
             ? json["incorrect_answer_3"] != ''
-                ? [
-                    json["incorrect_answer_1"],
-                    json["incorrect_answer_2"],
-                    json["incorrect_answer_3"],
-                  ]
+                ? json["incorrect_answer_4"] != ''
+                    ? [
+                        json["incorrect_answer_1"],
+                        json["incorrect_answer_2"],
+                        json["incorrect_answer_3"],
+                        json["incorrect_answer_4"],
+                      ]
+                    : [
+                        json["incorrect_answer_1"],
+                        json["incorrect_answer_2"],
+                        json["incorrect_answer_3"],
+                      ]
                 : [
                     json["incorrect_answer_1"],
                     json["incorrect_answer_2"],
