@@ -179,7 +179,7 @@ class _HomePageState extends State<HomePage>
                             color:
                                 Theme.of(context).textTheme.headline2.color)),
                     TextSpan(
-                      text: "\n" + Config().homeParagraph2,
+                      text: "\n" + "\n" + Config().homeParagraph2 + "\n",
                       style: TextStyle(
                           fontSize: Config().homeParagraph2FontSize,
                           color: Theme.of(context).textTheme.headline2.color),
@@ -204,7 +204,10 @@ class _HomePageState extends State<HomePage>
         return Material(
           child: Scaffold(
             appBar: AppBar(
-              title: Text(Config().homeTitleText),
+              //title: Text(Config().homeTitleText),
+              title: FittedBox(
+                fit: BoxFit.cover,
+                child: Text(Config().homeTitleText)),
               actions: <Widget>[
                 DropdownButton(
                   icon: Icon(Icons.palette, color: Colors.white),
