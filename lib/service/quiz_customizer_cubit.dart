@@ -3,6 +3,7 @@ import 'package:quiz/model/question_difficulty.dart';
 import 'package:quiz/model/question_parameter.dart';
 import 'package:quiz/model/question_type.dart';
 import 'package:quiz/model/quiz_category.dart';
+import 'package:quiz/model/quiz_year.dart';
 import 'package:quiz/service/quiz_service.dart';
 
 abstract class AbstractQuizCustomizerState {}
@@ -24,9 +25,11 @@ class QuizCustomizerCubit extends Cubit<AbstractQuizCustomizerState> {
   int _questionCount = 10;
   int _difficultyIndex = 0;
   int _questionTypeIndex = 2;
+  int _questionYearIndex = 0;
   QuestionCategoryExtension _category = QuestionCategoryExtension.ANY;
   QuestionDifficulty _difficulty = QuestionDifficulty.ANY;
   QuestionType _type = QuestionType.ANY;
+  QuestionYearExtension _year = QuestionYearExtension.ANY;
 
   QuizParameter get quizParameter => _quizParameter;
 
@@ -38,11 +41,15 @@ class QuizCustomizerCubit extends Cubit<AbstractQuizCustomizerState> {
 
   int get questionTypeIndex => _questionTypeIndex;
 
+  int get questionYearIndex => _questionYearIndex;
+
   QuestionCategoryExtension get category => _category;
 
   QuestionDifficulty get difficulty => _difficulty;
 
   QuestionType get type => _type;
+
+  QuestionYearExtension get year => _year;
 
   void selectCategory(int category,
       {QuestionCategoryExtension questionCategory =
@@ -71,12 +78,20 @@ class QuizCustomizerCubit extends Cubit<AbstractQuizCustomizerState> {
     emit(ParameterUpdatedState());
   }
 
+  void changeYear(int index,
+      {QuestionYearExtension questionYear = QuestionYearExtension.ANY}) {
+    _questionYearIndex = index;
+    _year = questionYear;
+    emit(ParameterUpdatedState());
+  }
+
   void startQuiz() {
     _quizParameter = _quizService.getQuizParameter(
       categoryIndex: quizCategory,
       questionCount: questionCount,
       difficultyIndex: difficultyIndex,
       questionTypeIndex: questionTypeIndex,
+      questionYearIndex: questionYearIndex,
     );
 
     //print('Quiz Parameter: ${_quizParameter.toJson()}');

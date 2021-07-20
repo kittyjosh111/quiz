@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_segmented_control/material_segmented_control.dart';
 import 'package:quiz/animation/bouncing_animation.dart';
 import 'package:quiz/model/config.dart';
+import 'package:quiz/model/quiz_year.dart';
 import 'package:quiz/service/quiz_customizer_cubit.dart';
 import 'package:quiz/view/quiz_page.dart';
 import 'package:quiz/widget/start_quiz_button.dart';
@@ -30,6 +31,10 @@ class CustomizeQuizPage extends StatelessWidget {
 
     void changeQuestionType(dynamic value) {
       quizCustomizer.changeQuestionType(value as int);
+    }
+
+    void changeQuestionYear(int index) {
+      quizCustomizer.changeYear(index);
     }
 
     void startQuiz() {
@@ -123,6 +128,36 @@ class CustomizeQuizPage extends StatelessWidget {
               difficultyButton(0, "Mixed"),
             ],
           ),
+        ),
+      );
+    }
+
+    Widget questionYearContainer() {
+      final years = QuestionYear().getYearsImmediate();
+      return Expanded(
+        child: CupertinoPicker(
+          itemExtent: 40.0,
+          children: <Widget>[
+            for (var i = 0; i < years.length; i++)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(left: 10),
+                    child: Text(
+                      years[i].title,
+                      style: TextStyle(color: Theme.of(context).primaryColor),
+                    ),
+                  )
+                ],
+              ),
+          ],
+          onSelectedItemChanged: (int index) {
+            //print(index);
+            changeQuestionYear(index);
+          },
+          looping: false,
+          //backgroundColor: Theme.of(context).primaryColor,
         ),
       );
     }
@@ -234,7 +269,8 @@ class CustomizeQuizPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       countCounter(),
-                      questionDifficultyContainer(),
+                      questionYearContainer(),
+                      //questionDifficultyContainer(),
                       //questionTypeContainer(),
                     ],
                   ),

@@ -5,6 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz/model/config.dart';
 import 'package:quiz/model/quiz_category.dart';
+import 'package:quiz/model/quiz_year.dart';
 import 'package:quiz/service/quiz_customizer_cubit.dart';
 import 'package:quiz/theme/ThemeItem.dart';
 import 'package:quiz/view/customize_quiz_page.dart';
@@ -27,6 +28,8 @@ class _HomePageState extends State<HomePage>
   bool _loaded = false;
   bool _loadingConfig = false;
   bool _loadedConfig = false;
+  bool _loadingYears = false;
+  bool _loadedYears = false;
 
   /// Listen to scroll direction
   /// And hide and show fab animation direction
@@ -87,7 +90,7 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    if (!_loaded || !_loadedConfig) {
+    if (!_loaded || !_loadedConfig || !_loadedYears) {
       if (!_loading) {
         _loading = true;
         QuestionCategory category = QuestionCategory();
@@ -113,6 +116,20 @@ class _HomePageState extends State<HomePage>
             .onError((error, stackTrace) => () {
                   setState(() {
                     _loadedConfig = true;
+                  });
+                });
+      }
+      if (!_loadingYears) {
+        _loadingYears = true;
+        QuestionYear year = QuestionYear();
+        year
+            .getYears()
+            .then((value) => setState(() {
+                  _loadedYears = true;
+                }))
+            .onError((error, stackTrace) => () {
+                  setState(() {
+                    _loadedYears = true;
                   });
                 });
       }
@@ -206,8 +223,7 @@ class _HomePageState extends State<HomePage>
             appBar: AppBar(
               //title: Text(Config().homeTitleText),
               title: FittedBox(
-                fit: BoxFit.cover,
-                child: Text(Config().homeTitleText)),
+                  fit: BoxFit.cover, child: Text(Config().homeTitleText)),
               actions: <Widget>[
                 DropdownButton(
                   icon: Icon(Icons.palette, color: Colors.white),
