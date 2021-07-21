@@ -37,7 +37,7 @@ class QuestionRepository {
         questions.add(q);
       }
 
-      questions.shuffle();
+      //questions.shuffle();
       questions =
           questions.take(min(quizParameter.amount, questions.length)).toList();
     }

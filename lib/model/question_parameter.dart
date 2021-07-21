@@ -63,6 +63,7 @@ class QuizParameter {
   @override
   String toString() {
     return "" +
+        "${_amount == null ? "" : "&cnt=" + _amount.toString()}" +
         "${_category == null ? "" : "&category_id=" + _category.toString()}" +
         "${_difficulty == null ? "" : "&difficulty=" + _difficulty}" +
         "${_type == null ? "" : "&type=" + _type}" +
