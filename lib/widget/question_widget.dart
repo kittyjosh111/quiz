@@ -23,7 +23,7 @@ class QuestionWidget extends StatefulWidget {
 }
 
 class _QuestionWidgetState extends State<QuestionWidget> {
-  List<String> options;
+  List<Option> options;
   List<Widget> optionWidgets;
   List<Color> colors;
   List<Widget> resultIcons;
@@ -50,7 +50,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
       colors.add(color);
       resultIcons.add(Container());
 
-      if (options[i] == widget._question.correctAnswer) {
+      if (options[i].equals(widget._question.correctAnswer)) {
         correctAnswerIndex = i;
       }
     }
@@ -158,7 +158,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
       );
 
   Widget optionWidget(
-          int index, String option, bool isCorrect, BuildContext context) =>
+          int index, Option option, bool isCorrect, BuildContext context) =>
       Container(
         margin: const EdgeInsets.symmetric(horizontal: 32),
         padding: EdgeInsets.only(bottom: index == options.length - 1 ? 8 : 16),
@@ -206,19 +206,62 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                   Flexible(
                       flex: 10,
                       fit: FlexFit.loose,
-                      child: Container(
-                        //fit: BoxFit.fitWidth,
-                        child: Text(
-                          option,
-                          style: TextStyle(
-                            color: Theme.of(context)
-                                .textTheme
-                                .button
-                                .color, //color: Colors.white,
-                            fontSize: 18,
-                          ),
-                        ),
-                      )),
+                      child: Column(
+                          children: (option.hasText() && option.hasImage())
+                              ? [
+                                  //fit: BoxFit.fitWidth,
+                                  Text(
+                                    option.optionText,
+                                    style: TextStyle(
+                                      color: Theme.of(context)
+                                          .textTheme
+                                          .button
+                                          .color, //color: Colors.white,
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                  PinchZoomImage(
+                                    image: Image.memory(Base64Decoder()
+                                        .convert(option.optionImage)),
+                                    zoomedBackgroundColor:
+                                        Color.fromRGBO(240, 240, 240, 1.0),
+                                    hideStatusBarWhileZooming: true,
+                                    onZoomStart: () {
+                                      //print('Zoom started');
+                                    },
+                                    onZoomEnd: () {
+                                      //print('Zoom finished');
+                                    },
+                                  ),
+                                ]
+                              : (option.hasText())
+                                  ? [
+                                      Text(
+                                        option.optionText,
+                                        style: TextStyle(
+                                          color: Theme.of(context)
+                                              .textTheme
+                                              .button
+                                              .color, //color: Colors.white,
+                                          fontSize: 18,
+                                        ),
+                                      ),
+                                    ]
+                                  : [
+                                      PinchZoomImage(
+                                        image: Image.memory(Base64Decoder()
+                                            .convert(option.optionImage)),
+                                        zoomedBackgroundColor:
+                                            Color.fromRGBO(240, 240, 240, 1.0),
+                                        hideStatusBarWhileZooming: true,
+                                        onZoomStart: () {
+                                          //print('Zoom started');
+                                        },
+                                        onZoomEnd: () {
+                                          //print('Zoom finished');
+                                        },
+                                      ),
+                                    ])),
                   Flexible(
                     flex: 1,
                     child: resultIcons[index],
@@ -233,10 +276,10 @@ class _QuestionWidgetState extends State<QuestionWidget> {
   @override
   Widget build(BuildContext context) {
     optionWidgets = List.generate(options.length, (i) {
-      String option = HtmlUnescape().convert(options[i]);
-      return option == widget._question.correctAnswer
-          ? optionWidget(i, option, true, context)
-          : optionWidget(i, option, false, context);
+      //String option = HtmlUnescape().convert(options[i].optionText);
+      return options[i].equals(widget._question.correctAnswer)
+          ? optionWidget(i, options[i], true, context)
+          : optionWidget(i, options[i], false, context);
     });
 
     return widget._question.questionImage != ''

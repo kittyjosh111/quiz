@@ -1,5 +1,31 @@
 import 'package:meta/meta.dart';
 
+class Option {
+  String optionText;
+  String optionImage;
+
+  Option(String optionText, String optionImage) {
+    this.optionText = optionText;
+    this.optionImage = optionImage;
+  }
+
+  String toString() {
+    return optionText + ":" + optionImage;
+  }
+
+  bool equals(Option o) {
+    return this.optionText == o.optionText && this.optionImage == o.optionImage;
+  }
+
+  bool hasText() {
+    return this.optionText != null && this.optionText != '';
+  }
+
+  bool hasImage() {
+    return this.optionImage != null && this.optionImage != '';
+  }
+}
+
 class Question {
   Question({
     @required this.category,
@@ -16,12 +42,12 @@ class Question {
   final String difficulty;
   final String question;
   final String questionImage;
-  final String correctAnswer;
-  final List<String> incorrectAnswers;
+  final Option correctAnswer;
+  final List<Option> incorrectAnswers;
 
   /// All the options
-  List<String> get options {
-    List<String> options = incorrectAnswers + [correctAnswer];
+  List<Option> get options {
+    List<Option> options = incorrectAnswers + [correctAnswer];
     options.shuffle();
 
     return options;
@@ -33,27 +59,41 @@ class Question {
         difficulty: json["difficulty"],
         question: json["question"],
         questionImage: json["question_image"],
-        correctAnswer: json["correct_answer"],
-        incorrectAnswers: json["incorrect_answer_2"] != ''
-            ? json["incorrect_answer_3"] != ''
-                ? json["incorrect_answer_4"] != ''
+        correctAnswer:
+            Option(json["correct_answer"], json["correct_answer_image"]),
+        incorrectAnswers: (json["incorrect_answer_2"] != '' ||
+                json["incorrect_answer_2_image"] != '')
+            ? (json["incorrect_answer_3"] != '' ||
+                    json["incorrect_answer_3_image"] != '')
+                ? (json["incorrect_answer_4"] != '' ||
+                        json["incorrect_answer_4_image"] != '')
                     ? [
-                        json["incorrect_answer_1"],
-                        json["incorrect_answer_2"],
-                        json["incorrect_answer_3"],
-                        json["incorrect_answer_4"],
+                        Option(json["incorrect_answer_1"],
+                            json["incorrect_answer_1_image"]),
+                        Option(json["incorrect_answer_2"],
+                            json["incorrect_answer_2_image"]),
+                        Option(json["incorrect_answer_3"],
+                            json["incorrect_answer_3_image"]),
+                        Option(json["incorrect_answer_4"],
+                            json["incorrect_answer_4_image"]),
                       ]
                     : [
-                        json["incorrect_answer_1"],
-                        json["incorrect_answer_2"],
-                        json["incorrect_answer_3"],
+                        Option(json["incorrect_answer_1"],
+                            json["incorrect_answer_1_image"]),
+                        Option(json["incorrect_answer_2"],
+                            json["incorrect_answer_2_image"]),
+                        Option(json["incorrect_answer_3"],
+                            json["incorrect_answer_3_image"]),
                       ]
                 : [
-                    json["incorrect_answer_1"],
-                    json["incorrect_answer_2"],
+                    Option(json["incorrect_answer_1"],
+                        json["incorrect_answer_1_image"]),
+                    Option(json["incorrect_answer_2"],
+                        json["incorrect_answer_2_image"]),
                   ]
             : [
-                json["incorrect_answer_1"],
+                Option(json["incorrect_answer_1"],
+                    json["incorrect_answer_1_image"]),
               ],
       );
 
