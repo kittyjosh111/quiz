@@ -136,6 +136,8 @@ class CustomizeQuizPage extends StatelessWidget {
       final years = QuestionYear().getYearsImmediate();
       return Expanded(
         child: CupertinoPicker(
+          scrollController: FixedExtentScrollController(
+              initialItem: quizCustomizer.questionYearIndex),
           itemExtent: 40.0,
           children: <Widget>[
             for (var i = 0; i < years.length; i++)
