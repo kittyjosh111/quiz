@@ -137,15 +137,42 @@ class QuizPage extends StatelessWidget {
 
         if (loading) {
           questionService.fetchQuestion(quizParameter);
-          return Material(
-            child: Center(
-              child: CircularProgressIndicator(),
-            ),
-          );
-        } else if (Provider.of<QuestionServiceProvider>(context).noQuestions()) {
-          return Material(
-            child: Center(
-              child: CircularProgressIndicator(),
+        }
+        if (loading ||
+            Provider.of<QuestionServiceProvider>(context).noQuestions()) {
+          return new Container(
+            color: Theme.of(context).scaffoldBackgroundColor,
+            padding: new EdgeInsets.all(32.0),
+            child: new Center(
+              child: new Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
+                    child: RichText(
+                      text: TextSpan(
+                        text: 'USABO/Biology Quiz',
+                        style: Theme.of(context).textTheme.headline3,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
+                    child: RichText(
+                      text: TextSpan(
+                        text: 'questions reproduced with permissions from',
+                        style: Theme.of(context).textTheme.bodyText1,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(150, 0, 150, 0),
+                    child: new Image.asset(
+                        'assets/images/usabo_blue-logo-300x120.png'),
+                  )
+                ],
+              ),
             ),
           );
         } else {
