@@ -224,20 +224,23 @@ class _HomePageState extends State<HomePage>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  AutoSizeText(
-                    Config().homeParagraph1,
-                    style: TextStyle(
-                        fontSize: Config().homeParagraph1FontSize,
-                        color: Theme.of(context).textTheme.headline2.color),
-                    maxLines: 2,
-                  ),
-                  AutoSizeText(
-                    "\n" + Config().homeParagraph2,
-                    style: TextStyle(
-                        fontSize: Config().homeParagraph2FontSize,
-                        color: Theme.of(context).textTheme.headline2.color),
-                    maxLines: 3,
-                  )
+                  Expanded(
+                      child: ListView(children: [
+                    AutoSizeText(
+                      Config().homeParagraph1,
+                      style: TextStyle(
+                          fontSize: Config().homeParagraph1FontSize,
+                          color: Theme.of(context).textTheme.headline2.color),
+                      maxLines: 2,
+                    ),
+                    AutoSizeText(
+                      "\n" + Config().homeParagraph2,
+                      style: TextStyle(
+                          fontSize: Config().homeParagraph2FontSize,
+                          color: Theme.of(context).textTheme.headline2.color),
+                      maxLines: 3,
+                    )
+                  ]))
                 ],
               ),
             ),
