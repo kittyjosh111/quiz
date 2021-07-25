@@ -28,6 +28,8 @@ class Config {
   double homeParagraph2FontSize;
   double minCount;
   double maxCount;
+  String customizeDescText;
+  double customizeDescTextFontSize;
 
   Future<bool> loadConfig() async {
     if (_loaded) {
@@ -63,6 +65,9 @@ class Config {
             double.parse(json[0]['homeParagraph2FontSize']);
         minCount = double.parse(json[0]['minCount']);
         maxCount = double.parse(json[0]['maxCount']);
+        customizeDescText = json[0]['customizeDescText'];
+        customizeDescTextFontSize =
+            double.parse(json[0]['customizeDescTextFontSize']);
       }
       assert(categoryFontSize != null &&
           categoryFontColor != null &&
@@ -76,7 +81,9 @@ class Config {
           homeParagraph2 != null &&
           homeParagraph2FontSize != null &&
           minCount != null &&
-          maxCount != null);
+          maxCount != null &&
+          customizeDescText != null &&
+          customizeDescTextFontSize != null);
       _loaded = true;
       return true;
     }

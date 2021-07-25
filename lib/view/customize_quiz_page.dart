@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -260,7 +261,8 @@ class CustomizeQuizPage extends StatelessWidget {
         return Material(
           child: Scaffold(
             appBar: AppBar(
-              title: Text(Config().customizeTitleText),
+              title: FittedBox(
+                  fit: BoxFit.cover, child: Text(Config().customizeTitleText)),
             ),
             body: SafeArea(
               child: Stack(
@@ -270,6 +272,17 @@ class CustomizeQuizPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      Padding(
+                        padding: EdgeInsets.all(40.0),
+                        child: AutoSizeText(
+                          Config().customizeDescText,
+                          style: TextStyle(
+                              fontSize: Config().customizeDescTextFontSize,
+                              color:
+                                  Theme.of(context).textTheme.headline2.color),
+                          maxLines: 3,
+                        ),
+                      ),
                       countCounter(),
                       questionYearContainer(),
                       //questionDifficultyContainer(),
