@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -220,23 +221,24 @@ class _HomePageState extends State<HomePage>
                       left: 16,
                       bottom: size.height * .15,
                     ),
-              child: RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                        text: Config().homeParagraph1,
-                        style: TextStyle(
-                            fontSize: Config().homeParagraph1FontSize,
-                            color:
-                                Theme.of(context).textTheme.headline2.color)),
-                    TextSpan(
-                      text: "\n" + "\n" + Config().homeParagraph2 + "\n",
-                      style: TextStyle(
-                          fontSize: Config().homeParagraph2FontSize,
-                          color: Theme.of(context).textTheme.headline2.color),
-                    ),
-                  ],
-                ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  AutoSizeText(
+                    Config().homeParagraph1,
+                    style: TextStyle(
+                        fontSize: Config().homeParagraph1FontSize,
+                        color: Theme.of(context).textTheme.headline2.color),
+                    maxLines: 2,
+                  ),
+                  AutoSizeText(
+                    "\n" + Config().homeParagraph2,
+                    style: TextStyle(
+                        fontSize: Config().homeParagraph2FontSize,
+                        color: Theme.of(context).textTheme.headline2.color),
+                    maxLines: 3,
+                  )
+                ],
               ),
             ),
           );
