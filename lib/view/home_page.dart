@@ -151,7 +151,7 @@ class _HomePageState extends State<HomePage>
                   padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
                   child: AutoSizeText(
                     "USABO/biology Quiz",
-                    style: Theme.of(context).textTheme.headline3,
+                    style: Theme.of(context).textTheme.headline4,
                     maxLines: 2,
                   )),
               Padding(
