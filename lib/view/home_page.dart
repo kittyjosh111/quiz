@@ -142,30 +142,27 @@ class _HomePageState extends State<HomePage>
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              RichText(
-                  text: TextSpan(
-                      text: "Welcome to",
-                      style: Theme.of(context).textTheme.headline6)),
+              AutoSizeText(
+                "Welcome to",
+                style: Theme.of(context).textTheme.headline6,
+                maxLines: 2,
+              ),
               Padding(
-                padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
-                child: RichText(
-                  text: TextSpan(
-                    text: 'USABO/Biology Quiz',
+                  padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
+                  child: AutoSizeText(
+                    "USABO/biology Quiz",
                     style: Theme.of(context).textTheme.headline3,
-                  ),
-                ),
-              ),
+                    maxLines: 2,
+                  )),
               Padding(
-                padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
-                child: RichText(
-                  text: TextSpan(
-                    text: 'questions reproduced with permissions from',
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
-                ),
-              ),
+                  padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
+                  child: AutoSizeText(
+                    "questions reused with permission from",
+                    style: Theme.of(context).textTheme.bodyText2,
+                    maxLines: 2,
+                  )),
               Padding(
-                padding: EdgeInsets.fromLTRB(150, 0, 150, 0),
+                padding: EdgeInsets.fromLTRB(50, 0, 50, 0),
                 child: new Image.asset(
                     'assets/images/usabo_blue-logo-300x120.png'),
               )
