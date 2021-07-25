@@ -3,10 +3,12 @@ import 'package:meta/meta.dart';
 class Option {
   String optionText;
   String optionImage;
+  bool correct;
 
-  Option(String optionText, String optionImage) {
+  Option(String optionText, String optionImage, bool correct) {
     this.optionText = optionText;
     this.optionImage = optionImage;
+    this.correct = correct;
   }
 
   String toString() {
@@ -53,14 +55,27 @@ class Question {
     return options;
   }
 
+  bool isMultiSelect() {
+    bool alreadyCorrect = false;
+    List<Option> options = incorrectAnswers + [correctAnswer];
+    for (Option option in options) {
+      if (option.correct && alreadyCorrect) {
+        return true;
+      } else if (option.correct) {
+        alreadyCorrect = true;
+      }
+    }
+    return false;
+  }
+
   factory Question.fromJson(Map<String, dynamic> json) => Question(
         category: json["category"],
         type: json["type"],
         difficulty: json["difficulty"],
         question: json["question"],
         questionImage: json["question_image"],
-        correctAnswer:
-            Option(json["correct_answer"], json["correct_answer_image"]),
+        correctAnswer: Option(json["correct_answer"],
+            json["correct_answer_image"], json["answer_correct_0"] == "1"),
         incorrectAnswers: (json["incorrect_answer_2"] != '' ||
                 json["incorrect_answer_2_image"] != '')
             ? (json["incorrect_answer_3"] != '' ||
@@ -68,32 +83,52 @@ class Question {
                 ? (json["incorrect_answer_4"] != '' ||
                         json["incorrect_answer_4_image"] != '')
                     ? [
-                        Option(json["incorrect_answer_1"],
-                            json["incorrect_answer_1_image"]),
-                        Option(json["incorrect_answer_2"],
-                            json["incorrect_answer_2_image"]),
-                        Option(json["incorrect_answer_3"],
-                            json["incorrect_answer_3_image"]),
-                        Option(json["incorrect_answer_4"],
-                            json["incorrect_answer_4_image"]),
+                        Option(
+                            json["incorrect_answer_1"],
+                            json["incorrect_answer_1_image"],
+                            json["answer_correct_1"] == "1"),
+                        Option(
+                            json["incorrect_answer_2"],
+                            json["incorrect_answer_2_image"],
+                            json["answer_correct_2"] == "1"),
+                        Option(
+                            json["incorrect_answer_3"],
+                            json["incorrect_answer_3_image"],
+                            json["answer_correct_3"] == "1"),
+                        Option(
+                            json["incorrect_answer_4"],
+                            json["incorrect_answer_4_image"],
+                            json["answer_correct_4"] == "1"),
                       ]
                     : [
-                        Option(json["incorrect_answer_1"],
-                            json["incorrect_answer_1_image"]),
-                        Option(json["incorrect_answer_2"],
-                            json["incorrect_answer_2_image"]),
-                        Option(json["incorrect_answer_3"],
-                            json["incorrect_answer_3_image"]),
+                        Option(
+                            json["incorrect_answer_1"],
+                            json["incorrect_answer_1_image"],
+                            json["answer_correct_1"] == "1"),
+                        Option(
+                            json["incorrect_answer_2"],
+                            json["incorrect_answer_2_image"],
+                            json["answer_correct_2"] == "1"),
+                        Option(
+                            json["incorrect_answer_3"],
+                            json["incorrect_answer_3_image"],
+                            json["answer_correct_3"] == "1"),
                       ]
                 : [
-                    Option(json["incorrect_answer_1"],
-                        json["incorrect_answer_1_image"]),
-                    Option(json["incorrect_answer_2"],
-                        json["incorrect_answer_2_image"]),
+                    Option(
+                        json["incorrect_answer_1"],
+                        json["incorrect_answer_1_image"],
+                        json["answer_correct_1"] == "1"),
+                    Option(
+                        json["incorrect_answer_2"],
+                        json["incorrect_answer_2_image"],
+                        json["answer_correct_2"] == "1"),
                   ]
             : [
-                Option(json["incorrect_answer_1"],
-                    json["incorrect_answer_1_image"]),
+                Option(
+                    json["incorrect_answer_1"],
+                    json["incorrect_answer_1_image"],
+                    json["answer_correct_1"] == "1"),
               ],
       );
 

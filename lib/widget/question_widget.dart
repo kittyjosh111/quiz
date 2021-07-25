@@ -157,8 +157,93 @@ class _QuestionWidgetState extends State<QuestionWidget> {
         ),
       );
 
-  Widget optionWidget(
-          int index, Option option, bool isCorrect, BuildContext context) =>
+  Widget checkButtonWidget(BuildContext context) => Container(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        padding: new EdgeInsets.all(32.0),
+        child: new Center(
+          child: new Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0, vertical: 8.0)),
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  MaterialButton(
+                    color: Theme.of(context).focusColor,
+                    child: Row(
+                      children: [
+                        Icon(Icons.check),
+                        SizedBox(width: 2),
+                        Text("Check Answers",
+                            style: TextStyle(
+                                color:
+                                    Theme.of(context).textTheme.button.color)),
+                      ],
+                    ),
+                    onPressed: answered
+                        ? null
+                        : () {
+                            bool allCorrect = true;
+                            for (int index = 0;
+                                index < this.options.length;
+                                index++) {
+                              if (options[index].correct &&
+                                  colors[index] !=
+                                      Theme.of(context).accentColor) {
+                                allCorrect = false;
+                                break;
+                              } else if (!options[index].correct &&
+                                  colors[index] ==
+                                      Theme.of(context).accentColor) {
+                                allCorrect = false;
+                                break;
+                              }
+                            }
+                            setState(() {
+                              for (int index = 0;
+                                  index < this.options.length;
+                                  index++) {
+                                if (options[index].correct) {
+                                  resultIcons[index] = Icon(
+                                    Icons.check_circle_outline_rounded,
+                                    color: correctColor,
+                                  );
+                                  if (colors[index] ==
+                                      Theme.of(context).accentColor) {
+                                    colors[index] = correctColor;
+                                  } else {
+                                    colors[index] = wrongColor;
+                                  }
+                                } else {
+                                  if (colors[index] ==
+                                      Theme.of(context).accentColor) {
+                                    colors[index] = wrongColor;
+                                    resultIcons[index] = Icon(
+                                      Icons.cancel_outlined,
+                                      color: wrongColor,
+                                    );
+                                  }
+                                }
+                              }
+                              widget._answer(allCorrect);
+                              answered = true;
+                            });
+                          },
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      );
+
+  Widget optionWidget(int index, Option option, bool isCorrect,
+          BuildContext context, multiSelect) =>
       Container(
         margin: const EdgeInsets.symmetric(horizontal: 32),
         padding: EdgeInsets.only(bottom: index == options.length - 1 ? 8 : 16),
@@ -176,22 +261,31 @@ class _QuestionWidgetState extends State<QuestionWidget> {
             onPressed: answered
                 ? null
                 : () {
-                    setState(() {
-                      colors[index] = wrongColor;
-                      colors[correctAnswerIndex] = correctColor;
-                      resultIcons[index] = Icon(
-                        Icons.cancel_outlined,
-                        color: wrongColor,
-                      );
-                      resultIcons[correctAnswerIndex] = Icon(
-                        Icons.check_circle_outline_rounded,
-                        color: correctColor,
-                      );
+                    if (!multiSelect) {
+                      setState(() {
+                        colors[index] = wrongColor;
+                        colors[correctAnswerIndex] = correctColor;
+                        resultIcons[index] = Icon(
+                          Icons.cancel_outlined,
+                          color: wrongColor,
+                        );
+                        resultIcons[correctAnswerIndex] = Icon(
+                          Icons.check_circle_outline_rounded,
+                          color: correctColor,
+                        );
 
-                      answered = true;
-                    });
+                        answered = true;
+                      });
 
-                    widget._answer(answered && index == correctAnswerIndex);
+                      widget._answer(answered && index == correctAnswerIndex);
+                    } else {
+                      setState(() {
+                        colors[index] =
+                            (colors[index] == Theme.of(context).accentColor)
+                                ? Theme.of(context).primaryColor
+                                : Theme.of(context).accentColor;
+                      });
+                    }
                   },
             child: AnimatedContainer(
               duration: Duration(milliseconds: 400),
@@ -276,35 +370,27 @@ class _QuestionWidgetState extends State<QuestionWidget> {
   @override
   Widget build(BuildContext context) {
     optionWidgets = List.generate(options.length, (i) {
-      //String option = HtmlUnescape().convert(options[i].optionText);
-      return options[i].equals(widget._question.correctAnswer)
-          ? optionWidget(i, options[i], true, context)
-          : optionWidget(i, options[i], false, context);
+      return options[i].correct
+          ? optionWidget(
+              i, options[i], true, context, widget._question.isMultiSelect())
+          : optionWidget(
+              i, options[i], false, context, widget._question.isMultiSelect());
     });
 
-    return widget._question.questionImage != ''
-        ? SingleChildScrollView(
-            child: Container(
-            child: Column(
-              children: [
-                    questionContainer(
-                        HtmlUnescape().convert(widget._question.question),
-                        context)
-                  ] +
-                  [questionImageContainer(widget._question.questionImage)] +
-                  optionWidgets,
-            ),
-          ))
-        : SingleChildScrollView(
-            child: Container(
-            child: Column(
-              children: [
-                    questionContainer(
-                        HtmlUnescape().convert(widget._question.question),
-                        context)
-                  ] +
-                  optionWidgets,
-            ),
-          ));
+    List<Widget> widgets = [
+      questionContainer(
+          HtmlUnescape().convert(widget._question.question), context)
+    ];
+    if (widget._question.questionImage != '') {
+      widgets.add(questionImageContainer(widget._question.questionImage));
+    }
+    widgets.addAll(optionWidgets);
+    if (widget._question.isMultiSelect()) {
+      widgets.add(checkButtonWidget(context));
+    }
+    return SingleChildScrollView(
+        child: Container(
+      child: Column(children: widgets),
+    ));
   }
 }
