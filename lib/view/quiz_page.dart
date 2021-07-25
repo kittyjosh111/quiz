@@ -156,7 +156,7 @@ class QuizPage extends StatelessWidget {
                       padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
                       child: AutoSizeText(
                         "USABO/biology Quiz",
-                        style: Theme.of(context).textTheme.headline4,
+                        style: Theme.of(context).textTheme.headline5,
                         maxLines: 2,
                       )),
                   Padding(
