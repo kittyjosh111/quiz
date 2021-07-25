@@ -198,57 +198,6 @@ class _HomePageState extends State<HomePage>
       quizCustomizer.selectCategory(0);
     };
 
-    final Widget sliverAppBar = SliverAppBar(
-      expandedHeight: size.height * 0.15,
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-      flexibleSpace: LayoutBuilder(
-        builder: (context, constraints) {
-          double appBarHeight =
-              constraints.biggest.height; //getting AppBar height
-          bool isExpanded =
-              appBarHeight >= size.height * 0.12; //check if AppBar is expanded
-
-          return AnimatedOpacity(
-            duration: Duration(milliseconds: 400),
-            opacity: isExpanded ? 1 : 0,
-            child: AnimatedContainer(
-              duration: Duration(milliseconds: 200),
-              alignment: Alignment.bottomLeft,
-              padding: isExpanded
-                  ? EdgeInsets.only(left: 16)
-                  : EdgeInsets.only(
-                      left: 16,
-                      bottom: size.height * .15,
-                    ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                      child: ListView(children: [
-                    AutoSizeText(
-                      Config().homeParagraph1,
-                      style: TextStyle(
-                          fontSize: Config().homeParagraph1FontSize,
-                          color: Theme.of(context).textTheme.headline2.color),
-                      maxLines: 2,
-                    ),
-                    AutoSizeText(
-                      "\n" + Config().homeParagraph2,
-                      style: TextStyle(
-                          fontSize: Config().homeParagraph2FontSize,
-                          color: Theme.of(context).textTheme.headline2.color),
-                      maxLines: 3,
-                    )
-                  ]))
-                ],
-              ),
-            ),
-          );
-        },
-      ),
-    );
-
     return BlocConsumer<QuizCustomizerCubit, AbstractQuizCustomizerState>(
       bloc: quizCustomizer,
       listener: (context, state) {
@@ -287,7 +236,33 @@ class _HomePageState extends State<HomePage>
                 child: CustomScrollView(
                   controller: _scrollController,
                   slivers: [
-                    sliverAppBar,
+                    SliverToBoxAdapter(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          AutoSizeText(
+                            Config().homeParagraph1,
+                            style: TextStyle(
+                                fontSize: Config().homeParagraph1FontSize,
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .headline2
+                                    .color),
+                            maxLines: 2,
+                          ),
+                          AutoSizeText(
+                            "\n" + Config().homeParagraph2,
+                            style: TextStyle(
+                                fontSize: Config().homeParagraph2FontSize,
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .headline2
+                                    .color),
+                            maxLines: 3,
+                          ),
+                        ],
+                      ),
+                    ),
                     SliverGrid(
                       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                         maxCrossAxisExtent: getMaxCrossAxisExtend(),
