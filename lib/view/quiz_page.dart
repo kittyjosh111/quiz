@@ -168,8 +168,7 @@ class QuizPage extends StatelessWidget {
                       )),
                   Padding(
                     padding: EdgeInsets.fromLTRB(50, 0, 50, 0),
-                    child: new Image.asset(
-                        'assets/images/usabo_blue-logo-300x120.png'),
+                    child: new Image.asset('assets/images/cee.png'),
                   )
                 ],
               ),

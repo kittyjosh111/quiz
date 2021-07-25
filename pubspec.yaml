@@ -35,3 +35,4 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/usabo_blue-logo-300x120.png
+    - assets/images/cee.png
