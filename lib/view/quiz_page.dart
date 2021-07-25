@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quiz/model/question.dart';
@@ -137,9 +138,7 @@ class QuizPage extends StatelessWidget {
 
         if (loading) {
           questionService.fetchQuestion(quizParameter);
-        }
-        if (loading ||
-            Provider.of<QuestionServiceProvider>(context).noQuestions()) {
+
           return new Container(
             color: Theme.of(context).scaffoldBackgroundColor,
             padding: new EdgeInsets.all(32.0),
@@ -171,6 +170,54 @@ class QuizPage extends StatelessWidget {
                     child: new Image.asset(
                         'assets/images/usabo_blue-logo-300x120.png'),
                   )
+                ],
+              ),
+            ),
+          );
+        } else if (Provider.of<QuestionServiceProvider>(context)
+            .noQuestions()) {
+          return new Container(
+            color: Theme.of(context).scaffoldBackgroundColor,
+            padding: new EdgeInsets.all(32.0),
+            child: new Center(
+              child: new Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  AutoSizeText(
+                    "No more questions",
+                    style: Theme.of(context).textTheme.headline2,
+                    maxLines: 2,
+                  ),
+                  Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 8.0)),
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      MaterialButton(
+                        color: Theme.of(context).accentColor,
+                        child: Row(
+                          children: [
+                            Icon(Icons.power_settings_new),
+                            SizedBox(width: 2),
+                            Text("Quit",
+                                style: TextStyle(
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .button
+                                        .color)),
+                          ],
+                        ),
+                        onPressed: () {
+                          Navigator.of(context)
+                              .popUntil((route) => route.settings.name == '/');
+                        },
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
