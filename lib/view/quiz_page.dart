@@ -162,14 +162,16 @@ class QuizPage extends StatelessWidget {
                   Padding(
                       padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
                       child: AutoSizeText(
-                        "questions reused with permission from",
+                        "questions reused with permission from CEE",
                         style: Theme.of(context).textTheme.bodyText2,
                         maxLines: 2,
                       )),
+                  /*
                   Padding(
                     padding: EdgeInsets.fromLTRB(50, 0, 50, 0),
                     child: new Image.asset('assets/images/cee.png'),
                   )
+                  */
                 ],
               ),
             ),
